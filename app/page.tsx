@@ -1,13 +1,21 @@
+'use client';
+
 import { useSession } from 'next-auth/react';
 
 export default function Home() {
-  const session = useSession();
+  const { data: session } = useSession();
+
+  if (session) {
+    return (
+      <>
+        <div>You have access</div>
+      </>
+    );
+  }
+
   return (
-    <main>
-      <div>
-        <h1>Home</h1>
-        <p>Session: {JSON.stringify(session)}</p>
-      </div>
-    </main>
+    <>
+      <div>This is a protected route</div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import GoogleSignInButton from './_components/GoogleSignInButton';
 import {
   Form,
   FormControl,
@@ -14,6 +15,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { signIn } from 'next-auth/react';
+import GithubSignInButton from './_components/GithubSignInButton';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -35,6 +38,11 @@ export default function Page() {
 
   function submitHandler(values: z.infer<typeof formSchema>) {
     console.log(values);
+    signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      // callbackUrl: '/',
+    });
   }
   return (
     <div className="h-screen w-screen flex justify-center items-center">
@@ -81,9 +89,8 @@ export default function Page() {
           </form>
         </Form>
         <div className="flex flex-col gap-2 mt-4">
-          <Button className="w-full" variant="outline">
-            Sign in with Google
-          </Button>
+          <GoogleSignInButton />
+          <GithubSignInButton />
           <div className="text-center text-sm">
             Don&apost have an account?
             <Link className="underline" href="/auth/register">
