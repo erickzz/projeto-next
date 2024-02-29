@@ -4,22 +4,22 @@ import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
+  name: z.string().min(3, {
+    message: 'Name must be at least 3 characters.',
   }),
   email: z.string().email({
     message: 'Invalid email address.',
@@ -30,6 +30,12 @@ const formSchema = z.object({
 });
 
 export default function Page() {
+  const route = useRouter();
+
+  const submitHandler = async (data: { email: any; password: any }) => {
+    console.log(data);
+  };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,9 +45,6 @@ export default function Page() {
     },
   });
 
-  function submitHandler(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
   return (
     <div className="h-screen w-screen flex justify-center items-center">
       <div className="w-1/5 h-auto p-4">
