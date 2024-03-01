@@ -18,7 +18,30 @@ export const handler = NextAuth({
         clientSecret: process.env.GITHUB_SECRET as string,
         allowDangerousEmailAccountLinking: true,
 
-       }),],
+       }),
+       CredentialsProvider({
+        name: "Credentials",
+        credentials: {
+            email: { label: "Email", type: "text" },
+            password: { label: "Password", type: "password" },
+        },
+        async authorize(credentials, req) {
+            const user = await prisma.user.findFirst({
+                where: {
+                    email: credentials?.email,
+                },
+            });
+            if (!user) {
+                return null;
+            }
+            if (user.password !== credentials?.password) {
+                return null;
+            }
+            return user;
+        },
+         }),
+            
+        ],
        session: {
         strategy: "jwt",
         },

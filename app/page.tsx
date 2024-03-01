@@ -1,8 +1,7 @@
 'use client';
 
-import { Avatar } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
@@ -15,8 +14,10 @@ export default function Home() {
       <div className="w-screen h-screen flex justify-center items-center">
         <div className="space-y-6 flex flex-col items-center justify-center">
           <Avatar>
-            <AvatarImage src={session.user?.image} />
-            <AvatarFallback>{session.user?.name}</AvatarFallback>
+            <AvatarImage src={session.user?.image ?? ''} />
+            <AvatarFallback>
+              {session.user?.name ? session.user.name[0] : ':)'}
+            </AvatarFallback>
           </Avatar>
           <p>
             You have access.

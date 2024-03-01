@@ -39,6 +39,7 @@ export default function Page() {
 
   function submitHandler(values: z.infer<typeof formSchema>) {
     console.log(values);
+    setIsLoading(true);
     signIn('credentials', {
       email: values.email,
       password: values.password,
