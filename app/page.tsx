@@ -1,21 +1,39 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { Avatar } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
+import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const { data: session } = useSession();
+  const router = useRouter();
 
   if (session) {
     return (
-      <>
-        <div>You have access</div>
-      </>
+      <div className="w-screen h-screen flex justify-center items-center">
+        <div className="space-y-6 flex flex-col items-center justify-center">
+          <Avatar>
+            <AvatarImage src={session.user?.image} />
+            <AvatarFallback>{session.user?.name}</AvatarFallback>
+          </Avatar>
+          <p>
+            You have access.
+            <span>{session.user?.email}</span>
+          </p>
+          <Button onClick={() => signOut()}>Sign out</Button>
+        </div>
+      </div>
     );
   }
 
   return (
-    <>
-      <div>This is a protected route</div>
-    </>
+    <div className="w-screen h-screen flex justify-center items-center text-center">
+      <div className="space-y-6">
+        <p>Sign in to have access to the content</p>
+        <Button onClick={() => router.push('/auth')}>Sign In</Button>
+      </div>
+    </div>
   );
 }

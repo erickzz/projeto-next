@@ -9,13 +9,10 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   name: z.string().min(3, {
@@ -30,8 +27,6 @@ const formSchema = z.object({
 });
 
 export default function Page() {
-  const route = useRouter();
-
   const submitHandler = async (data: { email: any; password: any }) => {
     console.log(data);
   };
