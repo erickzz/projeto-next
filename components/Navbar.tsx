@@ -14,7 +14,11 @@ import {
 } from './ui/dropdown-menu';
 
 export default function Navbar() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  // Check if the user is authenticated or in the process of authentication
+  const loadingSession = status === 'loading';
+
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center">
       <Link className="flex items-center justify-center text-bla" href="/">
@@ -69,6 +73,10 @@ export default function Navbar() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        ) : loadingSession ? (
+          <Avatar>
+            <AvatarFallback></AvatarFallback>
+          </Avatar>
         ) : (
           <Link href="/auth" className="mr-4">
             <Button>Sign In</Button>
