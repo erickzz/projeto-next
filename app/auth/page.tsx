@@ -53,7 +53,7 @@ export default function Page() {
   }
   return (
     <div className="h-screen w-screen flex justify-center items-center">
-      <div className="w-1/5 h-auto p-4">
+      <div className="w-auto h-auto border-2 p-20 rounded">
         <div className="space-y-2 text-center mb-2">
           <h1 className="text-3xl font-bold">Sign In</h1>
           <p className="text-gray-500 dark:text-gray-400">
