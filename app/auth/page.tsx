@@ -52,7 +52,7 @@ export default function Page() {
     signIn(provider, { callbackUrl: 'http://localhost:3000' });
   }
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
+    <div className="h-screen flex justify-center items-center">
       <div className="w-auto h-auto border-2 p-20 rounded">
         <div className="space-y-2 text-center mb-2">
           <h1 className="text-3xl font-bold">Sign In</h1>
