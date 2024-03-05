@@ -11,6 +11,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -27,8 +28,24 @@ const formSchema = z.object({
 });
 
 export default function Page() {
-  const submitHandler = async (data: { email: any; password: any }) => {
-    console.log(data);
+  const router = useRouter();
+  const submitHandler = async (data: {
+    name: string;
+    email: string;
+    password: string;
+  }) => {
+    try {
+      fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+    router.push('/auth');
   };
 
   const form = useForm<z.infer<typeof formSchema>>({

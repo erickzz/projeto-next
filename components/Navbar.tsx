@@ -73,10 +73,6 @@ export default function Navbar() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        ) : loadingSession ? (
-          <Avatar>
-            <AvatarFallback></AvatarFallback>
-          </Avatar>
         ) : (
           <Link href="/auth" className="mr-4">
             <Button>Sign In</Button>
