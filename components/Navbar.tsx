@@ -20,7 +20,7 @@ export default function Navbar() {
   const loadingSession = status === 'loading';
 
   return (
-    <header className="px-4 lg:px-6 h-14 flex items-center">
+    <header className="px-4 lg:px-6 h-14 flex items-center mr-4">
       <Link className="flex items-center justify-center text-bla" href="/">
         Next App
       </Link>
@@ -62,9 +62,12 @@ export default function Navbar() {
             <DropdownMenuContent>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                Profile
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
+                className="cursor-pointer"
                 onClick={() => {
                   signOut();
                 }}

@@ -1,5 +1,6 @@
 'use client';
 
+import Spinner from '@/components/Spinner';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -12,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -29,12 +31,14 @@ const formSchema = z.object({
 
 export default function Page() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const submitHandler = async (data: {
     name: string;
     email: string;
     password: string;
   }) => {
     try {
+      setIsLoading(true);
       fetch('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -42,10 +46,14 @@ export default function Page() {
         },
         body: JSON.stringify(data),
       });
+      console.log(form.formState.isSubmitting);
     } catch (error) {
       console.error('Error creating user:', error);
+    } finally {
+      setTimeout(() => {
+        router.push('/auth');
+      }, 3000);
     }
-    router.push('/auth');
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,7 +67,7 @@ export default function Page() {
 
   return (
     <div className="h-screen w-screen flex justify-center items-center">
-      <div className="w-1/5 h-auto p-4">
+      <div className="w-auto h-auto border-2 p-20 rounded-xl">
         <div className="space-y-2 text-center mb-2">
           <h1 className="text-3xl font-bold">Sign Up</h1>
           <p className="text-gray-500 dark:text-gray-400">
@@ -102,14 +110,14 @@ export default function Page() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} type="password" />
                   </FormControl>
                 </FormItem>
               )}
             />
 
-            <Button className="w-full" type="submit">
-              Submit
+            <Button className="w-full" type="submit" disabled={isLoading}>
+              {isLoading ? <Spinner /> : 'Sign Up'}
             </Button>
           </form>
         </Form>
