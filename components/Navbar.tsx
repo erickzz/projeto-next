@@ -12,12 +12,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
 
   // Check if the user is authenticated or in the process of authentication
   const loadingSession = status === 'loading';
+
+  const router = useRouter();
+
+  console.log(session?.user.id);
 
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center mr-4">
@@ -62,7 +67,12 @@ export default function Navbar() {
             <DropdownMenuContent>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push(`/profile/${session.user?.name}`);
+                }}
+              >
                 Profile
               </DropdownMenuItem>
               <DropdownMenuSeparator />
