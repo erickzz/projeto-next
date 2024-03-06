@@ -40,7 +40,7 @@ export default function Home() {
               alt="Image"
               className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
               height="310"
-              src="/placeholder.svg"
+              src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png"
               width="550"
             />
             <div className="flex flex-col justify-center space-y-4">
