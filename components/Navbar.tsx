@@ -22,7 +22,7 @@ export default function Navbar() {
 
   const router = useRouter();
 
-  console.log(session?.user.id);
+  console.log(session?.user?.id);
 
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center mr-4">
