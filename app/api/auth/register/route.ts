@@ -1,5 +1,6 @@
 import { prisma } from "@/services/database";
 import { NextRequest } from "next/server";
+import bcrypt from 'bcrypt';
 
 
 
@@ -13,7 +14,7 @@ export async function POST(req: NextRequest) {
     const user = {
         name,
         email,
-        password
+        password: bcrypt.hashSync(password, 10)
     }
 
     try {
